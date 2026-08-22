@@ -35,6 +35,9 @@ Exploratory data analysis identified several important characteristics of the da
 
 The dataset also raised ethical concerns. Features such as race, sex, and native country can reflect or act as proxies for protected characteristics. To reduce the potential for unfair predictions, `race` and `sex_selfID` were removed before modeling.
 
+<img width="494" height="333" alt="image" src="https://github.com/user-attachments/assets/24adfc02-6c2d-4664-b20d-b2b153380097" />
+
+
 ## 🧠 Model Development
 
 ### Logistic Regression
