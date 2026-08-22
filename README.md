@@ -86,6 +86,9 @@ Training configuration:
 
 Training and validation loss and accuracy were monitored throughout training to evaluate model learning and potential overfitting.
 
+<img width="504" height="333" alt="image" src="https://github.com/user-attachments/assets/452c114a-3c99-4eac-8e4e-c94ad28644d4" />
+
+
 ## 📊 Results & Key Findings
 
 Both models achieved very similar overall performance.
