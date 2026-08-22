@@ -86,7 +86,8 @@ Training configuration:
 
 Training and validation loss and accuracy were monitored throughout training to evaluate model learning and potential overfitting.
 
-<img width="504" height="333" alt="image" src="https://github.com/user-attachments/assets/452c114a-3c99-4eac-8e4e-c94ad28644d4" />
+<img width="504" height="333" alt="image" src="https://github.com/user-attachments/assets/452c114a-3c99-4eac-8e4e-c94ad28644d4" /> <img width="503" height="333" alt="image" src="https://github.com/user-attachments/assets/519f4ec7-557c-42d6-81c3-c833b9d3bac2" />
+
 
 
 ## 📊 Results & Key Findings
