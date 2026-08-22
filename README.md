@@ -1,195 +1,136 @@
 # Census Income Prediction
 
-## Overview
+## ✨ Project Highlights
 
-This project applies supervised machine learning to the **U.S. Census Income Dataset** to predict whether an individual's annual income is greater than $50,000.
+* **85.35% test accuracy** with Logistic Regression
+* **67.93% F1 score** with the Neural Network
+* Compared a traditional machine learning model with a feedforward neural network
+* Used **GridSearchCV with 5-fold cross-validation** for Logistic Regression hyperparameter selection
+* Applied missing-value imputation, feature selection, one-hot encoding, and feature scaling
+* Considered **fairness and ethical implications** when selecting model features
+* Evaluated both models using **accuracy and F1 score**
 
-The project follows the machine learning lifecycle from exploratory data analysis and preprocessing through model training, hyperparameter optimization, evaluation, and comparison.
+## 📌 Project Overview
 
-Two classification approaches were developed:
+This project uses the **1994 U.S. Census Income dataset** to develop a binary classification model that predicts whether an individual's annual income is **greater than $50,000**.
 
-* **Logistic Regression**
-* **Feedforward Neural Network**
+The project follows the machine learning lifecycle, including problem definition, exploratory data analysis, data preparation, model development, evaluation, and comparison.
 
-The project also considers ethical and fairness implications associated with using demographic and socioeconomic data for predictive modeling.
+Two approaches were developed:
 
-## Problem Statement
+1. **Logistic Regression** as the traditional machine learning model
+2. **Feedforward Neural Network** using TensorFlow/Keras
 
-The goal is to predict the binary income class:
+The objective was not only to achieve strong predictive performance, but also to evaluate model complexity, interpretability, and potential ethical concerns associated with income prediction.
 
-* `<=50K`
-* `>50K`
+## 🔎 Data Exploration
 
-This type of prediction can demonstrate how organizations might use machine learning to process large datasets and support faster, data-driven decision-making.
+Exploratory data analysis identified several important characteristics of the dataset:
 
-## Dataset
+* The dataset contains both **numerical and categorical features**.
+* Missing values were present in `age`, `workclass`, `occupation`, `hours-per-week`, and `native-country`.
+* The income classes were **imbalanced**, with substantially more individuals earning `$50K or less` than those earning more than `$50K`.
+* Education and age showed meaningful relationships with income.
+* Individuals with higher education levels, particularly those with a **Bachelor's degree**, showed higher representation among individuals earning above $50K.
 
-The dataset contains demographic and employment-related information from the 1994 U.S. Census.
+The dataset also raised ethical concerns. Features such as race, sex, and native country can reflect or act as proxies for protected characteristics. To reduce the potential for unfair predictions, `race` and `sex_selfID` were removed before modeling.
 
-Features include information related to characteristics such as:
-
-* Age
-* Education
-* Workclass
-* Occupation
-* Hours worked per week
-* Native country
-* Other demographic and employment attributes
-
-The target variable is:
-
-```text
-income_binary
-```
-
-## Data Preparation
-
-Several preprocessing steps were performed before modeling.
-
-### Missing Values
-
-Numerical missing values were handled using median imputation:
-
-* Age
-* Hours per week
-
-Categorical missing values were replaced using the mode:
-
-* Workclass
-* Occupation
-* Native country
-
-### Feature Removal
-
-The following features were removed:
-
-* `race`
-* `sex_selfID`
-* `fnlwgt`
-
-Race and sex were removed because of fairness and ethical concerns associated with using demographic characteristics in income prediction. `fnlwgt` was removed because it represents a census sampling weight rather than a meaningful predictive characteristic for this modeling task.
-
-### Encoding and Scaling
-
-Categorical variables were converted into numerical representations using **one-hot encoding**.
-
-Features were standardized using **StandardScaler** before model training.
-
-## Exploratory Data Analysis
-
-The analysis examined:
-
-* Class distribution
-* Missing values
-* Feature data types
-* Summary statistics
-* Education and income relationships
-* Age distributions across income classes
-
-The exploratory analysis showed that the target classes were imbalanced and that variables such as education and age were associated with income outcomes.
-
-## Machine Learning Models
+## 🧠 Model Development
 
 ### Logistic Regression
 
-Logistic Regression was selected as the primary traditional machine learning model because this is a binary classification problem and the model provides interpretable coefficients.
+Logistic Regression was selected because the problem is a binary classification task and the model provides relatively interpretable coefficients.
 
-Hyperparameters were optimized using **GridSearchCV** with 5-fold cross-validation.
+Data preparation included:
 
-The search evaluated:
+* Median imputation for missing numerical values
+* Mode imputation for missing categorical values
+* Removal of `race`, `sex_selfID`, and `fnlwgt`
+* One-hot encoding of categorical features
+* Standardization using `StandardScaler`
+* Stratified train/test split
 
-```text
-C: 0.01, 0.1, 1, 10
-solver: liblinear, lbfgs
-```
+`GridSearchCV` with 5-fold cross-validation was then used to identify an effective combination of Logistic Regression hyperparameters.
+
+The model coefficients were also examined to understand which features were most strongly associated with the predicted outcome.
 
 ### Neural Network
 
-A feedforward neural network was implemented using **TensorFlow/Keras**.
+A feedforward neural network was developed using TensorFlow/Keras to provide a more complex comparison with Logistic Regression.
 
 Architecture:
 
 ```text
 Input Layer
-    ↓
+     ↓
 Dense Layer — 32 neurons, ReLU
-    ↓
+     ↓
 Dense Layer — 16 neurons, ReLU
-    ↓
+     ↓
 Output Layer — 1 neuron, Sigmoid
 ```
 
-Training configuration included:
+Training configuration:
 
-* SGD optimizer
-* Learning rate: `0.01`
-* Binary cross-entropy loss
-* 20 epochs
-* 20% validation split
+* **Optimizer:** SGD
+* **Learning rate:** 0.01
+* **Loss:** Binary Cross-Entropy
+* **Epochs:** 20
+* **Validation split:** 20%
 
-## Results
+Training and validation loss and accuracy were monitored throughout training to evaluate model learning and potential overfitting.
+
+## 📊 Results & Key Findings
+
+Both models achieved very similar overall performance.
 
 | Model               |   Accuracy |   F1 Score |
 | ------------------- | ---------: | ---------: |
 | Logistic Regression | **85.35%** |     66.74% |
 | Neural Network      | **85.20%** | **67.93%** |
 
-The two models performed very similarly.
+### Key Findings
 
-Logistic Regression produced slightly higher overall accuracy, while the Neural Network produced a slightly higher F1 score.
+**Logistic Regression achieved the highest accuracy.**
+Its 85.35% accuracy was slightly higher than the Neural Network's 85.20%.
 
-Because the performance difference was small, Logistic Regression was considered the stronger deployment candidate due to its **simplicity, interpretability, and lower complexity**.
+**The Neural Network achieved a slightly higher F1 score.**
+Its F1 score of 67.93% was higher than Logistic Regression's 66.74%, suggesting a modest improvement in balancing precision and recall for the positive class.
 
-## Ethical Considerations
+**The performance gap was small.**
+The Neural Network did not provide a large enough performance improvement to clearly justify its additional complexity for this dataset.
 
-Income prediction can reproduce historical and social inequalities present in the underlying data.
+**Interpretability favored Logistic Regression.**
+The model's coefficients provide a clearer explanation of how individual features influence predictions, making it easier to communicate results to stakeholders.
 
-Even when sensitive attributes such as race and sex are removed, other variables may still act as proxies for protected characteristics.
+**Class imbalance remains important.**
+Because the dataset contains substantially more observations in the `<=50K` class, accuracy alone does not fully describe model performance. The F1 score provides an additional perspective.
 
-Incorrect predictions could disproportionately affect disadvantaged or minority populations, particularly if such systems were used in high-impact areas such as:
+## 🧾 Model Summary
 
-* Lending
-* Hiring
-* Economic opportunity
+| Aspect           | Logistic Regression           | Neural Network                 |
+| ---------------- | ----------------------------- | ------------------------------ |
+| Model Type       | Linear classifier             | Feedforward neural network     |
+| Accuracy         | **85.35%**                    | 85.20%                         |
+| F1 Score         | 66.74%                        | **67.93%**                     |
+| Interpretability | High                          | Lower                          |
+| Complexity       | Lower                         | Higher                         |
+| Training         | Faster                        | More computationally intensive |
+| Best Advantage   | Simplicity & interpretability | Slightly higher F1 score       |
 
-For this reason, predictive models should support human decision-making rather than independently determine access to important opportunities.
+Overall, **Logistic Regression was the preferred model** for this project. Although the Neural Network produced a slightly higher F1 score, the improvement was small compared with the additional complexity involved in building, training, and interpreting the model.
 
-## Technologies
+## 🚀 Next Steps
 
-* Python
-* Pandas
-* NumPy
-* Matplotlib
-* Seaborn
-* Scikit-learn
-* TensorFlow
-* Keras
-* Jupyter Notebook
+Future improvements could focus on both predictive performance and responsible model development.
 
-## Key Takeaways
+* Experiment with **class weights or oversampling** to address class imbalance.
+* Perform additional **feature engineering** to capture relationships between demographic and employment variables.
+* Test other Logistic Regression configurations and classification thresholds.
+* Experiment with alternative Neural Network architectures.
+* Evaluate optimizers such as **Adam** and introduce techniques such as **dropout** or regularization.
+* Conduct more detailed **fairness and subgroup performance analysis**.
+* Compare additional evaluation metrics, particularly precision, recall, and confusion matrices.
+* Investigate whether model performance remains consistent across different demographic and socioeconomic groups.
 
-This project provided hands-on experience with:
-
-* Defining a machine learning problem
-* Exploratory data analysis
-* Data preprocessing
-* Feature engineering
-* Binary classification
-* Hyperparameter optimization
-* Neural network development
-* Model evaluation
-* Model comparison
-* Fairness and ethical considerations
-
-## Future Improvements
-
-Future work could explore:
-
-* Additional feature engineering
-* Class-weighted training
-* Oversampling minority classes
-* Alternative neural network architectures
-* Dropout and regularization
-* Adam optimization
-* Additional evaluation metrics
-* Fairness and subgroup performance analysis
+The next stage would be to improve predictive performance while ensuring that any resulting model is **interpretable, fair, and appropriate for real-world decision support**.
