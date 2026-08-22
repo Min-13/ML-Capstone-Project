@@ -57,6 +57,9 @@ Data preparation included:
 
 The model coefficients were also examined to understand which features were most strongly associated with the predicted outcome.
 
+<img width="763" height="387" alt="image" src="https://github.com/user-attachments/assets/8ae69b95-ec9b-4109-9780-7d1fdb30a3c9" />
+
+
 ### Neural Network
 
 A feedforward neural network was developed using TensorFlow/Keras to provide a more complex comparison with Logistic Regression.
